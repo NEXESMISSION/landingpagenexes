@@ -1,0 +1,173 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Nexes - Sharing our authentic journey to financial freedom to help guide yours."/>
+    <title>Nexes - Our Journey to Financial Freedom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+        <h1 class="hero-title">
+            <i class="fa-solid fa-route icon-style"></i> Nexes: Your Journey<br/>
+            to Financial Freedom
+        </h1>
+        <h2 class="hero-subtext">
+            Charting the course together, authentically.<br/> We share our steps so you can navigate yours.
+        </h2>
+    </header>
+
+    <main>
+        <!-- Current Focus Section with Cards -->
+        <div class="focus-section">
+            <h3><i class="fa-solid fa-binoculars icon-style"></i> Our Current Focus:</h3>
+            <div class="focus-cards">
+                <div class="focus-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                    <p>Minimalist budgeting techniques</p>
+                </div>
+                <div class="focus-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <p>Setting up our first investment goals</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="main-text">
+            We're documenting every step, strategy, success, and setback on the path to financial independence. Follow along for real insights.
+        </p>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+             <h3 class="cta-heading"><i class="fa-solid fa-envelope-open-text icon-style"></i> Join Our Journey</h3>
+             <p class="cta-description">Get updates and authentic insights straight to your inbox:</p>
+
+            <!-- Updated Form with Limited Places Message -->
+            <div class="limited-places">
+                <i class="fa-solid fa-clock icon-style"></i> Only <span class="highlight">5 spots</span> remaining this month
+            </div>
+            
+            <form action="https://formspree.io/f/xoveopvb" method="POST" class="subscribe-form">
+                <input type="hidden" name="_subject" value="New Nexes subscriber!">
+                
+                <label for="email" class="sr-only">Email Address</label>
+                <input id="email" type="email" name="email" placeholder="Enter your email address" required>
+                <button type="submit" class="cta-button">Subscribe Now</button>
+            </form>
+            <p class="form-note">Just the journey. No spam.</p>
+
+            <!-- Coming Soon Teaser with Card Layout -->
+            <div class="coming-soon">
+                <h4><i class="fa-solid fa-bullseye icon-style"></i> What to Expect:</h4>
+                <div class="expect-cards">
+                    <div class="expect-card">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <p>Detailed Budget Breakdowns</p>
+                    </div>
+                    <div class="expect-card">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <p>Investment Strategy Walkthroughs</p>
+                    </div>
+                    <div class="expect-card">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <p>Mistakes We've Made (and Learned From!)</p>
+                    </div>
+                    <div class="expect-card">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-toolbox"></i>
+                        </div>
+                        <p>Tool & Resource Reviews</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Nexes. All Rights Reserved.</p>
+    </footer>
+  </div>
+  <script>
+    // Script to handle form submission with AJAX
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the subscription form
+  const form = document.querySelector('.subscribe-form');
+  
+  // Add submit event handler
+  if (form) {
+    form.addEventListener('submit', handleSubmit);
+  }
+  
+  // Also handle the waitlist form if it exists
+  const waitlistForm = document.querySelector('.waitlist-form');
+  if (waitlistForm) {
+    waitlistForm.addEventListener('submit', handleSubmit);
+  }
+  
+  function handleSubmit(event) {
+    // Prevent the default form submission
+    event.preventDefault();
+    
+    // Get the form data
+    const formData = new FormData(this);
+    
+    // Get the form action URL
+    const action = this.getAttribute('action');
+    
+    // Show some kind of loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    
+    // Send the form data to Formspree using fetch API
+    fetch(action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Redirect to success page
+        window.location.href = 'success.html';
+      } else {
+        // Handle error
+        response.json().then(data => {
+          if (data.errors) {
+            console.error('Submission error:', data.errors);
+            alert('There was an error submitting your form. Please try again.');
+          }
+        });
+        // Reset button
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('There was an error submitting your form. Please try again.');
+      // Reset button
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    });
+  }
+});
+  </script>
+</body>
+</html>

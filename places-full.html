@@ -1,0 +1,239 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Nexes - Monthly Places Full"/>
+    <title>Nexes - Monthly Places Full</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #5c2be7 0%, #4a1fb9 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .full-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .icon-container {
+            width: 90px;
+            height: 90px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+        
+        .icon-container i {
+            font-size: 3rem;
+            color: #ffffff;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+        }
+        
+        .countdown {
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .home-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: #ffffff;
+            color: #5c2be7;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+        
+        .home-button:hover {
+            transform: translateY(-3px);
+            background-color: #f5f5f5;
+        }
+        
+        .waitlist-form {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .waitlist-form input {
+            padding: 14px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .waitlist-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .waitlist-form input:focus {
+            outline: none;
+            border-color: white;
+        }
+        
+        .form-note {
+            font-size: 0.85rem;
+            color: #e0e0e0;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .full-card {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="full-card">
+        <div class="icon-container">
+            <i class="fa-solid fa-hourglass-end"></i>
+        </div>
+        <h1>All Monthly Places Filled</h1>
+        <p>We've reached our monthly subscription limit. New spots will open in <span class="countdown">14 days</span>.</p>
+        
+        <form action="https://formspree.io/f/xoveopvb" method="POST" class="waitlist-form">
+            <input type="hidden" name="_subject" value="New Nexes waitlist entry!">
+            <input type="email" name="email" placeholder="Join waitlist with your email" required>
+            <button type="submit" class="home-button">Join Waitlist</button>
+        </form>
+        <p class="form-note">We'll notify you as soon as new spots open up.</p>
+        
+        <div style="margin-top: 25px;">
+            <a href="index.html" class="home-button">Return Home</a>
+        </div>
+    </div>
+  </div>
+  <script>
+    // Script to handle form submission with AJAX
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the subscription form
+  const form = document.querySelector('.subscribe-form');
+  
+  // Add submit event handler
+  if (form) {
+    form.addEventListener('submit', handleSubmit);
+  }
+  
+  // Also handle the waitlist form if it exists
+  const waitlistForm = document.querySelector('.waitlist-form');
+  if (waitlistForm) {
+    waitlistForm.addEventListener('submit', handleSubmit);
+  }
+  
+  function handleSubmit(event) {
+    // Prevent the default form submission
+    event.preventDefault();
+    
+    // Get the form data
+    const formData = new FormData(this);
+    
+    // Get the form action URL
+    const action = this.getAttribute('action');
+    
+    // Show some kind of loading state
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    
+    // Send the form data to Formspree using fetch API
+    fetch(action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Redirect to success page
+        window.location.href = 'success.html';
+      } else {
+        // Handle error
+        response.json().then(data => {
+          if (data.errors) {
+            console.error('Submission error:', data.errors);
+            alert('There was an error submitting your form. Please try again.');
+          }
+        });
+        // Reset button
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('There was an error submitting your form. Please try again.');
+      // Reset button
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    });
+  }
+});
+  </script>
+</body>
+</html>
